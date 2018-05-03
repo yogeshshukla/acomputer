@@ -45,6 +45,7 @@
 					    @endif 
 					    </tbody>
 					  </table>
+					  {{ $purchases->appends($_GET)->links() }}
                 </div>
             </div>
         </div>

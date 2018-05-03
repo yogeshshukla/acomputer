@@ -12,10 +12,33 @@ class SellController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-    	$sells = Sell::all();
-        return view('sells', array('sells' => $sells));
+    	$limit = 10;
+    	//\DB::enableQueryLog();
+    	$obj = new Sell();
+    	if(isset($request['category']) && !empty($request['category'])){
+			$obj = $obj->where('category_id', $request['category']);
+		}
+		
+		if( isset($request['from']) && !empty($request['from']) ){
+			if(isset($request['to']) && !empty($request['to'])){
+				$obj = $obj->whereBetween('created_at', array(date('Y-m-d H:i:s', strtotime( $request['from'] )) , date('Y-m-d', strtotime( $request['to'] )).' 23:59:59'));
+			}else {
+				$obj = $obj->whereBetween('created_at', array(date('Y-m-d H:i:s', strtotime( $request['from'] )) , date('Y-m-d H:i:s')));
+			}
+			
+		}else {
+			if( isset($request['to']) && !empty($request['to']) ){
+				$obj = $obj->whereBetween('created_at', array( date('Y-m-d H:i:s') , date('Y-m-d', strtotime( $request['to'] )).' 23:59:59') );
+				
+			}
+		}
+		
+		$sells = $obj->paginate($limit);
+    	//print_r(\DB::getQueryLog());
+    	//exit;
+    	return view('sells', array('sells' => $sells));
     }
 
     /**

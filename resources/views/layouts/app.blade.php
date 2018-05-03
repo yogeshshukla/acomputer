@@ -8,10 +8,11 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'AC') }}</title>
 
     <!-- Styles -->
     <link href="{{ asset('public/css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('public/css/jquery-ui.css') }}" rel="stylesheet">
 </head>
 <body>
     <div id="app">
@@ -76,5 +77,24 @@
 
     <!-- Scripts -->
     <script src="{{ asset('public/js/app.js') }}"></script>
+    <script src="{{ asset('public/js/jquery.js') }}"></script>
+    <script src="{{ asset('public/js/jquery-ui.js') }}"></script>
+    
+    <script>
+		$( function() {
+	    	$( "#datepicker" ).datepicker({
+	    		changeMonth: true,
+				changeYear: true
+	    	});
+	  	} );
+	  	$( function() {
+	    	$( "#datepicker2" ).datepicker({
+	    		changeMonth: true,
+				changeYear: true
+	    	});
+	  	} );
+
+	</script>
+
 </body>
 </html>
